@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>login</title>
+	<link rel="stylesheet" href="css/login.css">
+	<script src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="box">		
+		<h2>登录</h2>
+		<i>用户名：</i>
+		<input type="text" id="uname" placeholder="请输入用户名" maxlength="12"><span id="unamep"></span><br>
+		<i>密码：</i>
+		<input type="password" id="upsd" placeholder="请输入密码" maxlength="12"><span id="upsdp"></span><br>
+		<button id="btn">登录</button>
+		<a href="register.html" class="zc">注册>></a>
+	</div>
+	<script>
+		var reg_name = /^[\da-zA-Z_]{3,12}$/;
+		var reg_psd = /^\S{6,12}$/;
+		// var flag_psd = false;
+		// var flag_name = false;
+		$(".box").on("keydown","input",function(event){
+			var event = event || window.event;
+			if(event.keyCode == 32){
+				return false;
+			}
+		}).on("focus","input",function(){
+			this.style.borderColor = "#999";
+			$(this).next("span").html("")
+		})
+		$("#uname").blur(function(){
+			if(reg_name.test($("#uname").val())){
+				this.style.borderColor = "#6fc";
+				// flag_name = true;
+				$("#unamep").css("color","#6fc").html("")
+			}else{
+				this.style.borderColor = "#e00";
+				// flag_name = false;
+				$("#unamep").css("color","#e00").html("用户名不规范")
+			}
+		})
+		$("#upsd").blur(function(){
+			if(reg_psd.test($("#upsd").val())){
+				this.style.borderColor = "#6fc";
+				// flag_psd = true;
+				$("#upsdp").css("color","#6fc").html("")
+			}else{
+				this.style.borderColor = "#e00";
+				// flag_psd = false;
+				$("#upsdp").css("color","#e00").html("密码不规范")
+			}
+		})
+		$("#btn").click(function(){
+			if(reg_psd.test($("#upsd").val()) && reg_name.test($("#uname").val())){
+				$.ajax({
+					type : "post",
+					url : "/login",
+					data : {
+						uname : $("#uname").val(),
+						upassword : $("#upsd").val()
+					},
+					success : function(data){
+						if(data == 2){
+							alert("用户名或密码错误")
+						}else if(data == 0){
+							alert("提交参数错误")
+						}else if(data == 1){
+							window.location.assign("shouye.html?uname=" + $("#uname").val())
+
+						}
+					}
+				})
+			}
+		})
+	</script>
+</body>
+</html>

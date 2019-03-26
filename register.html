@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>reg</title>
+	<link rel="stylesheet" href="css/reg.css">
+	<script src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="box">
+		
+		<h2>注册</h2>
+		<i>用户名：</i>
+		<input type="text" id="uname" placeholder="请输入用户名,3~12位数字、字母、_" maxlength="12">
+		<span id="unamep"></span><br>
+		<i>密码：</i>
+		<input type="password" id="upsd" placeholder="请输入密码,6~12位" maxlength="12">
+		<span id="upsdp"></span><br>
+		<i>确认密码：</i>
+		<input type="password" id="upsd2" placeholder="确认密码" maxlength="12">
+		<span id="upsdp2"></span><br>
+		<button id="btn">注册</button>
+		<a href="login.html" class="dl">登录>></a>
+	</div>
+	<script>
+		var reg_name = /^[\da-zA-Z_]{3,12}$/;
+		var reg_psd = /^\S{6,12}$/;
+
+		$(".box").on("keydown","input",function(event){
+			var event = event || window.event;
+			if(event.keyCode == 32){
+				return false;
+			}
+		}).on("focus","input",function(){
+			this.style.borderColor = "#999";
+			$(this).next("span").html("")
+		})
+
+		$("#uname").blur(function(){
+			if(reg_name.test($("#uname").val())){
+				$.ajax({
+					type : "GET",
+					url : "/reg_user?uname=" + $("#uname").val(),
+					success : function(data){
+						console.log(data);
+						if(data == 0){
+							$("#uname").css("border-color","#e00");
+							// flag_name = false;
+							$("#unamep").css("color","#e00").html("用户名已存在")
+						}else if(data == 1){
+							$("#uname").css("border-color","#6fc");
+							// flag_name = true;
+							$("#unamep").css("color","#6fc").html("用户名可以使用")
+						}
+					}
+				})
+			}else{
+				this.style.borderColor = "#e00";
+				// flag_name = false;
+				$("#unamep").css("color","#e00").html("用户名不规范")
+			}
+		})
+
+
+
+		$("#upsd").blur(function(){
+			if(reg_psd.test($("#upsd").val())){
+				this.style.borderColor = "#6fc";
+				// flag_psd = true;
+				$("#upsdp").css("color","#6fc").html("密码可以使用")
+			}else{
+				this.style.borderColor = "#e00";
+				// flag_psd = false;
+				$("#upsdp").css("color","#e00").html("密码不规范")
+			}
+		})
+		$("#upsd2").blur(function(){
+			if(reg_psd.test($("#upsd").val())){
+				if($("#upsd2").val() == $("#upsd").val()){
+					this.style.borderColor = "#6fc";
+					// flag_psd2 = true;
+					$("#upsdp2").css("color","#6fc").html("密码可以使用")
+				}else{
+					this.style.borderColor = "#e00";
+					// flag_psd2 = false;
+					$("#upsdp2").css("color","#e00").html("两次密码不一致")
+				}
+			}else{
+				this.style.borderColor = "#e00";
+				flag_psd2 = false;
+				$("#upsdp2").css("color","#e00").html("密码格式不正确")
+			}
+		})
+
+
+
+		$("#btn").click(function(){
+			if(reg_psd.test($("#upsd").val()) && reg_name.test($("#uname").val()) && $("#upsd2").val() == $("#upsd").val()){
+				$.ajax({
+					type : "post",
+					url : "/reg",
+					data : {
+						uname : $("#uname").val(),
+						upassword : $("#upsd").val()
+					},
+					success : function(data){
+						console.log(data);
+						if(data == 0){
+							alert("提交参数错误")
+						}else if(data == 1){
+							window.location.assign("pagejump.html")
+						}
+					}
+				})
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>跳转</title>
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<style>
+		body{
+			background:url("./bg.jpg"); 
+		}
+		div{
+			width: 200px;
+			height: 200px;
+			background-color: #56caf5;
+			margin-top: 300px;
+			margin-left: 40%;
+			text-align: center;
+			line-height: 200px;
+			border-radius: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<p><span>5</span>后自动跳转？<a href="login.html">立即登录</a></p>
+	</div>
+	<script>
+		
+		var time = 4;
+		function fun(){
+			$("span").html(time);
+			time--;
+			if(time > 0){
+				setTimeout(fun, 1000);
+			}else{
+				document.location.href = "login.html"
+			}
+		}
+		setTimeout(fun, 1000);
+	</script>
+</body>
+</html>

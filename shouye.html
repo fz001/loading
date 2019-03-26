@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<link rel="stylesheet" href="css/shouye.css">
+	<script src="js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="box">	
+		<h2>当前用户：<span id="nuser"></span></h2>		
+		<div class="list clearfix">
+			<input type="text" id="noo" class="li-w" placeholder="请输入编号"><br/><br/>
+			<input type="text" id="name" class="li-w" placeholder="请输入姓名"><br/><br/>
+			<input type="text" id="sex" class="li-w" placeholder="请输入性别"><br/><br/>
+			<input type="text" id="age" class="li-w" placeholder="请输入年龄"><br/><br/>
+			<input type="text" id="mail" class="li-w" placeholder="请输入邮箱"><br/><br/>
+			<input type="text" id="phone" class="li-w" placeholder="请输入手机号">
+		</div>
+		<button id="add">添加</button>
+		<button id="change">修改</button>
+		
+		<ul class="head clearfix">
+			<li>编号</li>
+			<li>姓名</li>
+			<li>性别</li>
+			<li>年龄</li>
+			<li class="li-w">邮箱</li>
+			<li class="li-w">手机号</li>
+			<li>操作</li>
+		</ul>
+		<div class="contain clearfix"></div>
+		<div class="r">
+			<input type="text" id="ss" maxlength="20" placeholder="查询"><button id="search">查找</button>
+		</div><br/>
+		<b>*添加：无需输入编号</b><br/>
+		<b>*修改：输入编号和对应信息点击修改即可即可</b><br/>
+		<b>*查询：可根据姓名、性别、邮箱、手机号码进行查询</b>
+	</div>
+	<script src="js/shouye.js"></script>
+</body>
+</html>
